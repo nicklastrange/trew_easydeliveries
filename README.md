@@ -11,18 +11,18 @@ I made it work with society too, so you can decide if some amount of money made 
 
 # Here is original vortisrd's readme
 
-# Trew_EasyDeliveries
+## Trew_EasyDeliveries
 Delivery system coded on ESX.  
 Made for you to create any delivery job you want to or create a delivery mission for an existing job.
 
-## Demo  
+### Demo  
 I created a marker at the Ballas location and made an event that when you press **E**, it starts a delivery mission with 2 locations. If the player below doesn't work, the demonstration can be [found here](https://streamable.com/9nj17)
 https://streamable.com/9nj17
 
-## Download
+### Download
 https://github.com/vortisrd/trew_easydeliveries
 
-## Usage and Example
+### Usage and Example
 Let's say you have a Ballas gang script and want to create a drug delivery mission. You need to:
 
  1. Create a marker to get the mission
@@ -33,7 +33,7 @@ Let's say you have a Ballas gang script and want to create a drug delivery missi
 That being said, here's an example on how you could do that.
 
 
-#### config.lua
+##### config.lua
 
 ```
     Config.DrugDeliveryBlipColor = 27
@@ -50,7 +50,7 @@ That being said, here's an example on how you could do that.
 ```
 
 
-#### client.lua
+##### client.lua
 
 ```
     local Keys = {
@@ -129,7 +129,7 @@ That being said, here's an example on how you could do that.
 
 
 
-#### server.lua
+##### server.lua
 
 ```
 
@@ -166,11 +166,11 @@ That being said, here's an example on how you could do that.
     
 ```
 
-## Exported Functions
+### Exported Functions
 **exports.trew_easydeliveries:deliveryStatus()**
 It tells you if the delivery is active or not
 
-## Variables
+### Variables
 **job**  
 The job you want to create the delivery. Ex: ballas, losvagos, baker, pizzaman, etc.
 *Must be the same identifier as in the database*
@@ -228,7 +228,7 @@ I hope you guys like it! :smiley:
 
 
 
-## Download & Installation
+### Download & Installation
 1) Download the .zip.
 2) Extract the .zip.
 3) Place `trew_easydeliveries` in your ESX Directory
@@ -236,7 +236,7 @@ I hope you guys like it! :smiley:
 
 
 
-## Changelog
+### Changelog
 **Aug 30th, 2019**
 
  - Item consumption and rewarding were moved to server-side;
