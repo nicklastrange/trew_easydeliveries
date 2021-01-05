@@ -1,12 +1,16 @@
 
+# Project forked from vortisrd, check it out! (https://github.com/vortisrd/trew_easydeliveries)
+It's pretty much original script but made towards delivery mission on Vanilla Unicorn job.
+I made it work with society too, so you can decide if some amount of money made on delivery is going to be earned by Vanilla Unicorn itself.
 
+## Requirements
+* [es_extended](https://github.com/ESX-Org/es_extended)
+* [esx_unicornjob](https://github.com/esx-community/esx_unicornjob) AND ALL IT'S DEPENDENCIES
 
 # Trew_EasyDeliveries
 Delivery system coded on ESX.  
 Made for you to create any delivery job you want to or create a delivery mission for an existing job.
 
-## Requirements
-* [es_extended](https://github.com/ESX-Org/es_extended)
 
 ## Demo  
 I created a marker at the Ballas location and made an event that when you press **E**, it starts a delivery mission with 2 locations. If the player below doesn't work, the demonstration can be [found here](https://streamable.com/9nj17)
