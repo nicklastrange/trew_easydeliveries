@@ -1,7 +1,15 @@
 ESX  = nil
 local deliveryPlayers = {}
+local societyAccount
+local rewardSociety
 
 TriggerEvent('esx:getSharedObject', function(obj) ESX = obj end)
+
+if Config.UnicornIsSocietyEarning then 
+	TriggerEvent('esx_addonaccount:getSharedAccount', 'society_unicorn', function(account)
+		societyAccount = account
+	end)
+end
 
 
 RegisterServerEvent('trew_easydeliveries:start')
@@ -55,6 +63,11 @@ AddEventHandler('trew_easydeliveries:removeItemAndReward', function(item)
 
 	local rewardType = deliveryPlayers[source]['rewardType']
 	local reward = math.ceil(deliveryPlayers[source]['rewardMoney']*random)
+	if Config.UnicornIsSocietyEarning then
+		rewardSociety = reward * Config.SocietyEarningPercantage
+		reward = reward - rewardSociety
+	end
+	
 
 	local itemNumber = xPlayer.getInventoryItem(item).count
 
@@ -70,9 +83,19 @@ AddEventHandler('trew_easydeliveries:removeItemAndReward', function(item)
 		xPlayer.removeInventoryItem(item, math.ceil(1*random))
 
 		if (rewardType == 'black_money') or (rewardType == 'bank') then
-			xPlayer.addAccountMoney(rewardType, reward)
+			if Config.UnicornIsSocietyEarning then
+				xPlayer.addAccountMoney(rewardType, reward)
+				societyAccount.addMoney(rewardSociety)
+			else
+				xPlayer.addAccountMoney(rewardType, reward)
+			end
 		else
-			xPlayer.addMoney(reward)
+			if Config.UnicornIsSocietyEarning then
+				xPlayer.addMoney(reward)
+				societyAccount.addMoney(rewardSociety)
+			else
+				xPlayer.addMoney(reward)
+			end
 		end
 
 		itemNumber = xPlayer.getInventoryItem(item).count
@@ -90,4 +113,34 @@ AddEventHandler('trew_easydeliveries:removeItemAndReward', function(item)
 	end
 
 	
+end)
+
+RegisterServerEvent('esx_trew_unicorn:unicornDelivery')
+AddEventHandler('esx_trew_unicorn:unicornDelivery', function()
+
+TriggerEvent('trew_easydeliveries:start', {
+	player = source,
+	job = 'unicorn',
+	product = 'whisky',
+	howmany = Config.UnicornDeliveriesAmount,
+	label = 'Whiskey sell', 
+	title = 'Whiskey delivery',
+	reward = Config.UnicornRewardPerItem,
+	rewardtype = 'cash',
+	anim = {
+		dict = 'anim@heists@money_grab@duffel',
+		name = 'enter'
+	},
+	blipcolor = Config.UnicornDeliveryBlipColor,
+	markercolor = {
+		r = Config.UnicornDeliveryMarkerColor[1],
+		g = Config.UnicornDeliveryMarkerColor[2],
+		b = Config.UnicornDeliveryMarkerColor[3]
+	},
+	markervisibility = 40,
+	blips = Config.UnicornDeliveryLocations
+})
+
+
+
 end)

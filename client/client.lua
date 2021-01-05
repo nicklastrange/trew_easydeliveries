@@ -28,6 +28,64 @@ local deliveryBlip = nil
 local itemsAmmount = 0
 local playerJob = nil
 
+ -- Countdown
+ Citizen.CreateThread(function()
+     while true do
+         Citizen.Wait(0)
+
+         if exports.trew_easydeliveries:deliveryStatus() == false then
+
+             local x,y,z = table.unpack(GetEntityCoords(PlayerPedId()))
+             local bz,cz = GetGroundZFor_3dCoord(Config.UnicornDeliveryPickup['x'], Config.UnicornDeliveryPickup['y'], Config.UnicornDeliveryPickup['z'])
+            local distance = GetDistanceBetweenCoords(Config.UnicornDeliveryPickup['x'], Config.UnicornDeliveryPickup['y'],cz,x,y,z,true)
+
+             if distance <= 40 then
+
+                unicornDrawMarker(
+                       1,
+                     { Config.UnicornDeliveryPickup['x'], Config.UnicornDeliveryPickup['y'], Config.UnicornDeliveryPickup['z'] },
+                     { Config.UnicornDeliveryMarkerColor[1],Config.UnicornDeliveryMarkerColor[2],Config.UnicornDeliveryMarkerColor[3] }
+                )
+
+                 if distance <= 1.2 then
+
+                    -- IF YOU PRESS E, YOU MAKE THE DELIVERY
+                    if IsControlJustPressed(0,Keys['E']) and not IsPedInAnyVehicle(PlayerPedId()) then
+                        TriggerServerEvent('esx_trew_unicorn:unicornDelivery')
+                    else
+                        SetTextComponentFormat('STRING')
+                        AddTextComponentString('Press ~INPUT_PICKUP~ start deliveries. ~b~')
+                        DisplayHelpTextFromStringLabel(0, 0, 1, -1)
+                     end
+                 end
+
+             end
+
+        end
+
+     end
+end)
+
+
+function unicornDrawMarker(markerType,markerCoords,makerColor)
+     DrawMarker(
+         markerType,
+        markerCoords[1],markerCoords[2],markerCoords[3],
+        0.0, 0.0, 0.0,
+        0.0, 0.0, 0.0,
+        1.5, 1.5, 1.0,
+         makerColor[1],makerColor[2],makerColor[3],
+        100,
+        false,
+        true,
+        2,
+        true,
+        false,
+        false,
+        false
+     )
+end
+
 
 RegisterNetEvent('trew_easydeliveries:checkList')
 AddEventHandler('trew_easydeliveries:checkList', function(args)
